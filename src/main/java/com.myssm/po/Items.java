@@ -21,6 +21,8 @@ public class Items {
     
     private String testName;//测试名称
 
+    private String testNickName;//测试昵称
+
     //关联用户类
     private User user;
 
