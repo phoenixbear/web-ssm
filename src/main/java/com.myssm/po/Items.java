@@ -18,6 +18,8 @@ public class Items {
     private String detail;
 
     private Date modifyTime;
+    
+    private String testName;//测试名称
 
     //关联用户类
     private User user;
