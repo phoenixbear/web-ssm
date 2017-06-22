@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+
+  <!-- 第一种方式：加载一个properties文件 -->
+  <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="location" value="classpath:jdbc.properties"/>
+  </bean>
+
+
+  <!-- 第二种方式：加载多个properties文件
+  <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+      <property name="locations">
+          <list>
+              <value>classpath:jdbc.properties</value>
+              <value>classpath:common.properties</value>
+          </list>
+      </property>
+      <property name="fileEncoding" value="UTF-8"/>
+  </bean>
+  <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+      <property name="properties" ref="configProperties"/>
+  </bean>
+  -->
+
+  <!-- 配置数据源 -->
+  <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+    <property name="url" value="${url}" />
+    <property name="username" value="${username}" />
+    <property name="password" value="${password}" />
+    <property name="driverClassName" value="${driverClassName}" />
+    <property name="filters" value="${filters}" />
+    <property name="maxActive" value="${maxActive}" />
+    <property name="initialSize" value="${initialSize}" />
+    <property name="maxWait" value="${maxWait}" />
+    <property name="minIdle" value="${minIdle}" />
+    <property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
+    <property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}" />
+    <property name="validationQuery" value="${validationQuery}" />
+    <property name="testWhileIdle" value="${testWhileIdle}" />
+    <property name="testOnBorrow" value="${testOnBorrow}" />
+    <property name="testOnReturn" value="${testOnReturn}" />
+    <property name="maxOpenPreparedStatements" value="${maxOpenPreparedStatements}" />
+    <property name="removeAbandoned" value="${removeAbandoned}" />
+    <property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
+    <property name="logAbandoned" value="${logAbandoned}" />
+  </bean>
+
+  <!-- mybatis和spring完美整合，不需要mybatis的配置映射文件 -->
+  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource"/>
+    <!-- 自动扫描mapping.xml文件 -->
+    <property name="mapperLocations" value="classpath:mapping/*.xml"></property>
+  </bean>
+
+  <!-- mapper扫描器 -->
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <!-- 扫描包路径，如果需要扫描多个包，中间使用半角逗号隔开 -->
+    <property name="basePackage" value="com.myssm.mapper"></property>
+    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+  </bean>
+
+
+  <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="com.heitian.ssm.dao"/>
+    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+  </bean>
+
+
+
+  <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"/>
+  </bean>
+
+  <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+  <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>

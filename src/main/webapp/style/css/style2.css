@@ -1,0 +1,65 @@
+#addDiv .text{border: 1px solid #ccc;background: #fff;width: 150px;height: 25px;font-size: 13px;
+		text-indent: 5px;border-radius:4px;color: #666; position: absolute;left: 100px;}
+#addDiv .select{border: 1px solid #ccc;border-radius:4px;width: 50px;color:#666;background: #fff;position: absolute;left: 100px; }
+#addDiv .textarea{border: 1px solid #ccc;border-radius:4px;color:#666;background: #fff; position: absolute;left: 100px;}
+#addDiv .star{font-size: 14px;color: red;}	
+#addDiv p label{color: #666;font-size: 14px;}
+#addDiv p{margin:10px 0;padding: 0;}
+#addDiv{margin: 15px 0 0 15px;}
+.ui-tooltip{color: #666;}
+
+
+
+#userInformation p{margin:10px 0;padding: 0;}
+
+
+
+#seeDiv{font-size: 14px;color:#666;margin: 0 0 0 10px; }
+#seeDiv p{margin:8px 0;padding: 0;}
+
+#editDiv .text{border: 1px solid #ccc;background: #fff;width: 200px;height: 25px;font-size: 13px;
+		text-indent: 5px;border-radius:4px;color: #666; position: absolute;left: 100px;}
+#editDiv .select{border: 1px solid #ccc;border-radius:4px;width: 50px;color:#666;background: #fff;position: absolute;left: 100px; }
+#editDiv .textarea{border: 1px solid #ccc;border-radius:4px;color:#666;background: #fff; position: absolute;left: 100px;}
+#editDiv .star{font-size: 14px;color: red;}	
+#editDiv p label{color: #666;font-size: 14px;}
+#editDiv p{margin:10px 0;padding: 0;}
+#editDiv{margin: 10px 0 0 10px;}
+
+/*roleListUI*/
+#addRoleDiv .text{border: 1px solid #ccc;background: #fff;width: 200px;height: 25px;font-size: 13px;
+		text-indent: 5px;border-radius:4px;color: #666; position: absolute;left: 100px;}
+#addRoleDiv .select{border: 1px solid #ccc;border-radius:4px;width: 50px;color:#666;background: #fff;position: absolute;left: 100px; }
+#addRoleDiv .textarea{border: 1px solid #ccc;border-radius:4px;color:#666;background: #fff; position: absolute;left: 100px;}
+#addRoleDiv .star{font-size: 14px;color: red;}	
+#addRoleDiv p label{color: #666;font-size: 14px;}
+#addRoleDiv p{margin:10px 0;padding: 0;}
+#addRoleDiv{margin: 10px 0 0 10px;}
+.ui-tooltip{color: #666;}
+
+
+#editRoleDiv .text{border: 1px solid #ccc;background: #fff;width: 200px;height: 25px;font-size: 13px;
+		text-indent: 5px;border-radius:4px;color: #666; position: absolute;left: 100px;}
+#editRoleDiv .textarea{border: 1px solid #ccc;border-radius:4px;color:#666;background: #fff; position: absolute;left: 100px;}
+#editRoleDiv p label{color: #666;font-size: 14px;}
+#editRoleDiv p{margin:10px 0;padding: 0;}
+#editRoleDiv{margin: 10px 0 0 10px;}
+
+
+#addRootNodeDiv .text{border: 1px solid #ccc;background: #fff;width: 200px;height: 25px;font-size: 13px;
+		text-indent: 5px;border-radius:4px;color: #666; position: absolute;left: 130px;}
+#addRootNodeDiv p label{color: #666;font-size: 14px;}
+#addRootNodeDiv p{margin:10px 0;padding: 0;}
+#addRootNodeDiv{margin: 10px 0 0 10px;}
+
+#addChildNodeDiv .text{border: 1px solid #ccc;background: #fff;width: 200px;height: 25px;font-size: 13px;
+		text-indent: 5px;border-radius:4px;color: #666; position: absolute;left: 100px;}
+#addChildNodeDiv p label{color: #666;font-size: 14px;}
+#addChildNodeDiv p{margin:10px 0;padding: 0;}
+#addChildNodeDiv{margin: 10px 0 0 10px;}
+
+#RenameNodeDiv .text{border: 1px solid #ccc;background: #fff;width: 200px;height: 25px;font-size: 13px;
+		text-indent: 5px;border-radius:4px;color: #666; position: absolute;left: 100px;}
+#RenameNodeDiv p label{color: #666;font-size: 14px;}
+#RenameNodeDiv p{margin:10px 0;padding: 0;}
+#RenameNodeDiv{margin: 10px 0 0 10px;}

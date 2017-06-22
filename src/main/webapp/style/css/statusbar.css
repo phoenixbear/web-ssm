@@ -1,0 +1,9 @@
+
+#StatusBar {
+	width: 100%;
+	padding-top:1px;
+	height: 100%;
+	border-top: 1px solid #ffffff;
+	filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#3d7aa7,endcolorstr=#4891c6,gradientType=0);
+	background-color: #4386B7;
+}

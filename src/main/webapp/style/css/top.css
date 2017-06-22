@@ -1,0 +1,25 @@
+body {
+	filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#094c79,endcolorstr=#99caeb,gradientType=0);
+}
+
+#Head1 {
+	width: 100%;
+	height: 50px;
+	border: 0px solid #FFFFF;
+	margin: 0px auto;
+	margin-top:0px;
+	background-color: #a0c6e1;
+	/* background: url(images/top_bg.gif) repeat-x; */
+}
+
+#Head2 {
+	width: 100%;
+	height: 50px;
+	margin-left: auto;
+	margin: 0;
+	
+	background-color:#4386B7;
+	/* background: url(images/head2_bg.gif) repeat-x; */
+	border-top: 1px solid #a0c6e1;
+	border-bottom: 2px solid #4891C6;
+}

@@ -1,0 +1,16 @@
+body {
+	background: #d8edfc;
+	font-size: 12px;
+	font-family: "微软雅黑";
+	margin-left: 1px;
+	
+}
+#Menu {
+	padding: 0px;
+	float: left;
+	width: 98%;
+	height:100%;
+	margin-top:1px;
+	margin-bottom:1px;
+	border: 2px #4891C6 solid;
+}

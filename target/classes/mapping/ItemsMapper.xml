@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.myssm.mapper.ItemsMapper" >
+
+	<resultMap type="com.myssm.po.Items" id="BaseResultMap">
+		<id jdbcType="VARCHAR" property="id" column="id"/>
+		<result jdbcType="VARCHAR" property="userId" column="user_id"/>
+		<result jdbcType="VARCHAR" property="name" column="name"/>
+		<result jdbcType="FLOAT" property="price" column="price"/>
+		<result jdbcType="VARCHAR" property="detail" column="detail"/>
+		<result jdbcType="VARCHAR" property="pic" column="pic"/>
+		<result jdbcType="TIMESTAMP" property="createTime" column="create_time"/>
+		<result jdbcType="TIMESTAMP" property="modifyTime" column="modify_time"/>
+	</resultMap>
+	<resultMap type="com.myssm.po.Items" id="ItemsUserResultMap" extends="BaseResultMap">
+    	<association property="user" javaType="com.myssm.po.User">
+			<result property="id" column="id"/>
+			<result property="userName" column="user_name"/>
+    	</association>
+  	</resultMap>
+	<sql id="Base_Column_List">
+		id,user_id,name,price,detail,pic,create_time,modify_time
+	</sql>
+	
+	<sql id="Base_Column_List_insert">
+		id,user_id,name,price,detail,pic,create_time
+	</sql>
+	
+   	<!-- 定义商品查询的sql片段，就是商品查询条件 -->
+   	<sql id="query_items_where">
+   		<!-- 使用动态sql，通过if判断，满足条件进行sql拼接 -->
+   		<!-- 商品查询条件通过ItemsQueryVo包装对象 中itemsCustom属性传递 -->
+   		<if test="items!=null">
+   			<if test="items.name!=null and items.name!=''">
+   				items.name LIKE '%${items.name}%'
+   			</if>
+   		</if>
+   	</sql>
+  	
+  	<!-- 商品列表查询 -->
+  	<select id="findItemsList" resultMap="ItemsUserResultMap">
+  		SELECT items.*,user.user_name FROM items,user  
+  		where items.user_id=user.id
+  	</select>
+  	
+  	<!-- 商品列表查询 -->
+  	<select id="findItemsByItems" resultMap="ItemsUserResultMap">
+  		SELECT items.*,user.user_name FROM items,user  
+  		<where>
+  			and items.user_id=user.id
+			<if test="name!=null and name!=''">
+				and items.name LIKE '%${name}%'
+			</if>
+			<if test="user!=null">
+				<if test="user.userName!=null and user.userName!=''">
+					and user.user_name LIKE '%${user.userName}%'
+				</if>
+			</if>
+  		</where>
+  	</select>
+  	
+  	<!-- 根据用户id查询 商品列表-->
+  	<select id="findItemsByUserId" resultMap="ItemsUserResultMap" parameterType="java.lang.Integer">
+  		SELECT items.*,user.user_name FROM items,user  
+  		where items.user_id=user.id and items.user_id=#{userId,jdbcType=INTEGER}
+  	</select>
+  	
+  	<!-- 查询单个商品 -->
+  	<select id="findItemsById" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List"/>
+		from items where id = #{id,jdbcType=INTEGER} 
+	</select>
+	
+	<!-- 添加商品信息 -->
+	<insert id="saveItems" parameterType="com.myssm.po.Items">
+		<selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">  
+			select replace(uuid(),'-','') from dual
+		</selectKey>  
+		insert into items(<include refid="Base_Column_List_insert"/>) 
+		values(
+			<if test="id!= null"> #{id,jdbcType=VARCHAR}, </if>
+			<if test="user.id!= null"> #{user.id,jdbcType=VARCHAR}, </if>
+			<if test="name!= null"> #{name,jdbcType=VARCHAR}, </if>
+			<if test="price!= null"> #{price,jdbcType=FLOAT}, </if>
+			<if test="detail!= null"> #{detail,jdbcType=VARCHAR}, </if>
+			<if test="pic != null"> #{pic,jdbcType=VARCHAR}, </if>
+			<if test="createTime != null"> #{createTime,jdbcType=TIMESTAMP}</if>
+		)
+	</insert>
+	
+	<!-- 批量 添加商品信息 -->
+	<insert id="saveItemsBatch" parameterType="java.util.List">
+		insert into items(<include refid="Base_Column_List_insert"></include>) values
+		<foreach collection="list" item="item_" index="index" separator=",">
+			(#{item_.id}, #{item_.user.id}, #{item_.name}, #{item_.price}, #{item_.detail}, #{item_.pic}, #{item_.createTime})
+		</foreach>
+	</insert>
+	
+  	
+  	<!-- 修改商品信息 -->
+  	<update id="editItems" parameterType="com.myssm.po.Items">
+		update items 
+		<set>
+		<if test="name!= null"> name = #{name,jdbcType=VARCHAR}, </if>
+		<if test="price!= null"> price = #{price,jdbcType=FLOAT}, </if>
+		<if test="detail!= null"> detail = #{detail,jdbcType=VARCHAR}, </if>
+		<if test="pic != null"> pic = #{pic,jdbcType=VARCHAR}, </if>
+		<if test="createTime != null"> create_time = #{createTime,jdbcType=TIMESTAMP}</if>
+		<if test="modifyTime != null">modify_time = #{modifyTime,jdbcType=TIMESTAMP}</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER} 
+	</update>
+	
+	<!-- 根据id删除商品信息 -->
+  	<delete id="deleteItemsById" parameterType="java.lang.String">
+		delete from items
+		where id = #{id,jdbcType=VARCHAR} 
+	</delete>
+	
+		
+	<!-- 根据List<id>删除商品信息 
+		<foreach>标签的用法：
+		六个参数：
+		collection：要循环的集合
+		index：循环索引（不知道啥用。。）
+		item：集合中的一个元素（item和collection，按foreach循环理解）
+		open：以什么开始
+		close：以什么结束
+		separator：循环内容之间以什么分隔
+	-->
+  	<delete id="deleteItemsBatch" parameterType="java.util.List">
+		delete from items where id in 
+		<foreach collection="list" item="id" index="index" open="("  close=")" separator=",">  
+         	#{id,jdbcType=VARCHAR} 
+        </foreach>  
+		
+	</delete>
+	
+</mapper>
